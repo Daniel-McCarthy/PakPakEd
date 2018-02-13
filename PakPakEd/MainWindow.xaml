@@ -12,7 +12,7 @@
         <GroupBox Header="Node Direction" HorizontalAlignment="Left" Height="216" Margin="358,0,0,0" VerticalAlignment="Top" Width="131"/>
 
         <Canvas x:Name="levelCanvas" HorizontalAlignment="Left" Height="336" Margin="10,10,0,-27" VerticalAlignment="Top" Width="336" Background="Blue" MouseLeftButtonDown="levelCanvas_MouseLeftButtonDown"/>
-        <Label Content="Enemy&#xD;&#xA;" HorizontalAlignment="Left" Margin="396,23,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.876,1.926" Width="54" Height="24"/>
+        <Label Content="Enemy&#xD;&#xA;" HorizontalAlignment="Left" Margin="396,23,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.876,1.926" Width="54" Height="30"/>
         <Label Content="Path" HorizontalAlignment="Left" Margin="396,53,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.876,1.926" Width="93" Height="24"/>
         <Label Content="Wall" HorizontalAlignment="Left" Margin="396,84,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.876,1.926" Width="93" Height="24"/>
         <Label Content="Directional Pad" HorizontalAlignment="Left" Margin="396,114,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.876,1.926" Width="93" Height="24"/>
