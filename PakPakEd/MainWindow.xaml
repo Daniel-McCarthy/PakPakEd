@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PakPakEd"
         mc:Ignorable="d"
-        Title="MainWindow" Height="436.365" Width="518.159" ResizeMode="NoResize" Icon="Icon.png">
+        Title="MainWindow" Height="436.365" Width="518.159" ResizeMode="NoResize" Icon="Icon.png" MouseUp="Window_MouseUp">
     <Grid Margin="0,0,-75,-67">
         <GroupBox Header="Node Direction" HorizontalAlignment="Left" Height="128" Margin="358,216,0,0" VerticalAlignment="Top" Width="131"/>
 

@@ -11,6 +11,8 @@ namespace PakPakEd
     /// </summary>
     public partial class MainWindow : Window
     {
+        System.Windows.Threading.DispatcherTimer mouseDrawTimer = new System.Windows.Threading.DispatcherTimer();
+
         byte[] levelPieces = new byte[28*28];
         byte width = 28;
 
@@ -36,6 +38,11 @@ namespace PakPakEd
         public MainWindow()
         {
             InitializeComponent();
+
+            
+            //Sets up timer, which allows drawing to continue while mouse down
+            mouseDrawTimer.Tick += new System.EventHandler(mouseDownTimer_Tick);
+            mouseDrawTimer.Interval = new System.TimeSpan(0, 0, 0, 0, 25);
         }
 
         //Edits array containing the level pieces on the grid
@@ -54,272 +61,283 @@ namespace PakPakEd
         {
             int scale = 4; //The level is supposed to be 84x84 pixels. 28 3x3 pixel level pieces in each direction. 84x84 is too small to work with, so the canvas is scaled up.
 
-            switch(newPieceID)
+            if (x < 28 && y < 28)
             {
-                case 0: //Wall
-                    {
-                        System.Windows.Shapes.Rectangle rect;
-                        rect = new System.Windows.Shapes.Rectangle();
-                        rect.Fill = new SolidColorBrush(Color.FromArgb(255, 0, 0, 255));//Blue
-                        rect.Width = 3 * scale;
-                        rect.Height = 3 * scale;
-                        Canvas.SetLeft(rect, (x * 3) * scale);
-                        Canvas.SetTop(rect, (y * 3) * scale);
-                        levelCanvas.Children.Add(rect);
 
-                        break;
-                    }
-                case 1: //Path
-                    {
-                        System.Windows.Shapes.Rectangle rect;
-                        rect = new System.Windows.Shapes.Rectangle();
-                        rect.Fill = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));//Black
-                        rect.Width = 3 * scale;
-                        rect.Height = 3 * scale;
-                        Canvas.SetLeft(rect, (x * 3) * scale);
-                        Canvas.SetTop(rect, (y * 3) * scale);
-                        levelCanvas.Children.Add(rect);
+                switch (newPieceID)
+                {
+                    case 0: //Wall
+                        {
+                            System.Windows.Shapes.Rectangle rect;
+                            rect = new System.Windows.Shapes.Rectangle();
+                            rect.Fill = new SolidColorBrush(Color.FromArgb(255, 0, 0, 255));//Blue
+                            rect.Width = 3 * scale;
+                            rect.Height = 3 * scale;
+                            Canvas.SetLeft(rect, (x * 3) * scale);
+                            Canvas.SetTop(rect, (y * 3) * scale);
+                            levelCanvas.Children.Add(rect);
 
-                        break;
-                    }
-                case 2: //Collectible
-                    {
-                        System.Windows.Shapes.Rectangle rect;
-                        rect = new System.Windows.Shapes.Rectangle();
-                        rect.Fill = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));//Green
-                        rect.Width = 3 * scale;
-                        rect.Height = 3 * scale;
-                        Canvas.SetLeft(rect, (x * 3) * scale);
-                        Canvas.SetTop(rect, (y * 3) * scale);
-                        levelCanvas.Children.Add(rect);
+                            break;
+                        }
+                    case 1: //Path
+                        {
+                            System.Windows.Shapes.Rectangle rect;
+                            rect = new System.Windows.Shapes.Rectangle();
+                            rect.Fill = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));//Black
+                            rect.Width = 3 * scale;
+                            rect.Height = 3 * scale;
+                            Canvas.SetLeft(rect, (x * 3) * scale);
+                            Canvas.SetTop(rect, (y * 3) * scale);
+                            levelCanvas.Children.Add(rect);
 
-                        break;
-                    }
-                case 3: //Enemy
-                    {
-                        System.Windows.Shapes.Rectangle rect;
-                        rect = new System.Windows.Shapes.Rectangle();
-                        rect.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));//Red
-                        rect.Width = 3 * scale;
-                        rect.Height = 3 * scale;
-                        Canvas.SetLeft(rect, (x * 3) * scale);
-                        Canvas.SetTop(rect, (y * 3) * scale);
-                        levelCanvas.Children.Add(rect);
+                            break;
+                        }
+                    case 2: //Collectible
+                        {
+                            System.Windows.Shapes.Rectangle rect;
+                            rect = new System.Windows.Shapes.Rectangle();
+                            rect.Fill = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));//Green
+                            rect.Width = 3 * scale;
+                            rect.Height = 3 * scale;
+                            Canvas.SetLeft(rect, (x * 3) * scale);
+                            Canvas.SetTop(rect, (y * 3) * scale);
+                            levelCanvas.Children.Add(rect);
 
-                        break;
-                    }
-                case 4: //Enemy Up
-                    {
-                        //Enemy Box
-                        System.Windows.Shapes.Rectangle rect;
-                        rect = new System.Windows.Shapes.Rectangle();
-                        rect.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));//Red
-                        rect.Width = 3 * scale;
-                        rect.Height = 3 * scale;
-                        Canvas.SetLeft(rect, (x * 3) * scale);
-                        Canvas.SetTop(rect, (y * 3) * scale);
-                        levelCanvas.Children.Add(rect);
+                            break;
+                        }
+                    case 3: //Enemy
+                        {
+                            System.Windows.Shapes.Rectangle rect;
+                            rect = new System.Windows.Shapes.Rectangle();
+                            rect.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));//Red
+                            rect.Width = 3 * scale;
+                            rect.Height = 3 * scale;
+                            Canvas.SetLeft(rect, (x * 3) * scale);
+                            Canvas.SetTop(rect, (y * 3) * scale);
+                            levelCanvas.Children.Add(rect);
 
-                        
-                        //Direction Up Box
-                        System.Windows.Shapes.Rectangle rect2;
-                        rect2 = new System.Windows.Shapes.Rectangle();
-                        rect2.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 128, 0));//Orange
-                        rect2.Width = 1 * scale;
-                        rect2.Height = 1 * scale;
-                        Canvas.SetLeft(rect2, ((x * 3) * scale) + (1 * scale));
-                        Canvas.SetTop(rect2, (y * 3) * scale);
-                        levelCanvas.Children.Add(rect2);
-                        
+                            break;
+                        }
+                    case 4: //Enemy Up
+                        {
+                            //Enemy Box
+                            System.Windows.Shapes.Rectangle rect;
+                            rect = new System.Windows.Shapes.Rectangle();
+                            rect.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));//Red
+                            rect.Width = 3 * scale;
+                            rect.Height = 3 * scale;
+                            Canvas.SetLeft(rect, (x * 3) * scale);
+                            Canvas.SetTop(rect, (y * 3) * scale);
+                            levelCanvas.Children.Add(rect);
 
-                        break;
-                    }
-                case 5: //Enemy Down
-                    {
-                        System.Windows.Shapes.Rectangle rect;
-                        rect = new System.Windows.Shapes.Rectangle();
-                        rect.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));//Red
-                        rect.Width = 3 * scale;
-                        rect.Height = 3 * scale;
-                        Canvas.SetLeft(rect, (x * 3) * scale);
-                        Canvas.SetTop(rect, (y * 3) * scale);
-                        levelCanvas.Children.Add(rect);
 
-                        
-                        //Direction Down Box
-                        System.Windows.Shapes.Rectangle rect2;
-                        rect2 = new System.Windows.Shapes.Rectangle();
-                        rect2.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 128, 0));//Orange
-                        rect2.Width = 1 * scale;
-                        rect2.Height = 1 * scale;
-                        Canvas.SetLeft(rect2, ((x * 3) * scale) + (1 * scale));
-                        Canvas.SetTop(rect2, ((y * 3) * scale) + (2 * scale));
-                        levelCanvas.Children.Add(rect2);
-                        
+                            //Direction Up Box
+                            System.Windows.Shapes.Rectangle rect2;
+                            rect2 = new System.Windows.Shapes.Rectangle();
+                            rect2.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 128, 0));//Orange
+                            rect2.Width = 1 * scale;
+                            rect2.Height = 1 * scale;
+                            Canvas.SetLeft(rect2, ((x * 3) * scale) + (1 * scale));
+                            Canvas.SetTop(rect2, (y * 3) * scale);
+                            levelCanvas.Children.Add(rect2);
 
-                        break;
-                    }
-                case 6: //Enemy Left
-                    {
-                        System.Windows.Shapes.Rectangle rect;
-                        rect = new System.Windows.Shapes.Rectangle();
-                        rect.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));//Red
-                        rect.Width = 3 * scale;
-                        rect.Height = 3 * scale;
-                        Canvas.SetLeft(rect, (x * 3) * scale);
-                        Canvas.SetTop(rect, (y * 3) * scale);
-                        levelCanvas.Children.Add(rect);
 
-                        //Direction Left Box
-                        System.Windows.Shapes.Rectangle rect2;
-                        rect2 = new System.Windows.Shapes.Rectangle();
-                        rect2.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 128, 0));//Orange
-                        rect2.Width = 1 * scale;
-                        rect2.Height = 1 * scale;
-                        Canvas.SetLeft(rect2, ((x * 3) * scale));
-                        Canvas.SetTop(rect2, ((y * 3) * scale) + (1 * scale));
-                        levelCanvas.Children.Add(rect2);
+                            break;
+                        }
+                    case 5: //Enemy Down
+                        {
+                            System.Windows.Shapes.Rectangle rect;
+                            rect = new System.Windows.Shapes.Rectangle();
+                            rect.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));//Red
+                            rect.Width = 3 * scale;
+                            rect.Height = 3 * scale;
+                            Canvas.SetLeft(rect, (x * 3) * scale);
+                            Canvas.SetTop(rect, (y * 3) * scale);
+                            levelCanvas.Children.Add(rect);
 
-                        break;
-                    }
-                case 7: //Enemy Right
-                    {
-                        System.Windows.Shapes.Rectangle rect;
-                        rect = new System.Windows.Shapes.Rectangle();
-                        rect.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));//Red
-                        rect.Width = 3 * scale;
-                        rect.Height = 3 * scale;
-                        Canvas.SetLeft(rect, (x * 3) * scale);
-                        Canvas.SetTop(rect, (y * 3) * scale);
-                        levelCanvas.Children.Add(rect);
 
-                        //Direction Right Box
-                        System.Windows.Shapes.Rectangle rect2;
-                        rect2 = new System.Windows.Shapes.Rectangle();
-                        rect2.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 128, 0));//Orange
-                        rect2.Width = 1 * scale;
-                        rect2.Height = 1 * scale;
-                        Canvas.SetLeft(rect2, ((x * 3) * scale) + (2 * scale));
-                        Canvas.SetTop(rect2, ((y * 3) * scale) + (1 * scale));
-                        levelCanvas.Children.Add(rect2);
+                            //Direction Down Box
+                            System.Windows.Shapes.Rectangle rect2;
+                            rect2 = new System.Windows.Shapes.Rectangle();
+                            rect2.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 128, 0));//Orange
+                            rect2.Width = 1 * scale;
+                            rect2.Height = 1 * scale;
+                            Canvas.SetLeft(rect2, ((x * 3) * scale) + (1 * scale));
+                            Canvas.SetTop(rect2, ((y * 3) * scale) + (2 * scale));
+                            levelCanvas.Children.Add(rect2);
 
-                        break;
-                    }
-                case 8: //Player
-                    {
-                        System.Windows.Shapes.Rectangle rect;
-                        rect = new System.Windows.Shapes.Rectangle();
-                        rect.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 128, (byte)timerSlider.Value));//Orange
-                        rect.Width = 3 * scale;
-                        rect.Height = 3 * scale;
-                        Canvas.SetLeft(rect, (x * 3) * scale);
-                        Canvas.SetTop(rect, (y * 3) * scale);
-                        levelCanvas.Children.Add(rect);
 
-                        //Additional logic for orange shades
+                            break;
+                        }
+                    case 6: //Enemy Left
+                        {
+                            System.Windows.Shapes.Rectangle rect;
+                            rect = new System.Windows.Shapes.Rectangle();
+                            rect.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));//Red
+                            rect.Width = 3 * scale;
+                            rect.Height = 3 * scale;
+                            Canvas.SetLeft(rect, (x * 3) * scale);
+                            Canvas.SetTop(rect, (y * 3) * scale);
+                            levelCanvas.Children.Add(rect);
 
-                        break;
-                    }
-                case 9: //Directional Up
-                    {
-                        System.Windows.Shapes.Rectangle rect;
-                        rect = new System.Windows.Shapes.Rectangle();
-                        rect.Fill = new SolidColorBrush(Color.FromArgb(255, 0, 150, 255));//Light Blue
-                        rect.Width = 3 * scale;
-                        rect.Height = 3 * scale;
-                        Canvas.SetLeft(rect, (x * 3) * scale);
-                        Canvas.SetTop(rect, (y * 3) * scale);
-                        levelCanvas.Children.Add(rect);
+                            //Direction Left Box
+                            System.Windows.Shapes.Rectangle rect2;
+                            rect2 = new System.Windows.Shapes.Rectangle();
+                            rect2.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 128, 0));//Orange
+                            rect2.Width = 1 * scale;
+                            rect2.Height = 1 * scale;
+                            Canvas.SetLeft(rect2, ((x * 3) * scale));
+                            Canvas.SetTop(rect2, ((y * 3) * scale) + (1 * scale));
+                            levelCanvas.Children.Add(rect2);
 
-                        
-                        //Direction Up Box
-                        System.Windows.Shapes.Rectangle rect2;
-                        rect2 = new System.Windows.Shapes.Rectangle();
-                        rect2.Fill = new SolidColorBrush(Color.FromArgb(255, 128, 150, 255));//Purple Blue
-                        rect2.Width = 1 * scale;
-                        rect2.Height = 1 * scale;
-                        Canvas.SetLeft(rect2, ((x * 3) * scale) + (1 * scale));
-                        Canvas.SetTop(rect2, ((y * 3) * scale));
-                        levelCanvas.Children.Add(rect2);
-                        
+                            break;
+                        }
+                    case 7: //Enemy Right
+                        {
+                            System.Windows.Shapes.Rectangle rect;
+                            rect = new System.Windows.Shapes.Rectangle();
+                            rect.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));//Red
+                            rect.Width = 3 * scale;
+                            rect.Height = 3 * scale;
+                            Canvas.SetLeft(rect, (x * 3) * scale);
+                            Canvas.SetTop(rect, (y * 3) * scale);
+                            levelCanvas.Children.Add(rect);
 
-                        break;
-                    }
-                case 10: //Directional Down
-                    {
-                        System.Windows.Shapes.Rectangle rect;
-                        rect = new System.Windows.Shapes.Rectangle();
-                        rect.Fill = new SolidColorBrush(Color.FromArgb(255, 0, 150, 255));//Light Blue
-                        rect.Width = 3 * scale;
-                        rect.Height = 3 * scale;
-                        Canvas.SetLeft(rect, (x * 3) * scale);
-                        Canvas.SetTop(rect, (y * 3) * scale);
-                        levelCanvas.Children.Add(rect);
+                            //Direction Right Box
+                            System.Windows.Shapes.Rectangle rect2;
+                            rect2 = new System.Windows.Shapes.Rectangle();
+                            rect2.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 128, 0));//Orange
+                            rect2.Width = 1 * scale;
+                            rect2.Height = 1 * scale;
+                            Canvas.SetLeft(rect2, ((x * 3) * scale) + (2 * scale));
+                            Canvas.SetTop(rect2, ((y * 3) * scale) + (1 * scale));
+                            levelCanvas.Children.Add(rect2);
 
-                        //Direction Down Box
-                        System.Windows.Shapes.Rectangle rect2;
-                        rect2 = new System.Windows.Shapes.Rectangle();
-                        rect2.Fill = new SolidColorBrush(Color.FromArgb(255, 128, 150, 255));//Purple Blue
-                        rect2.Width = 1 * scale;
-                        rect2.Height = 1 * scale;
-                        Canvas.SetLeft(rect2, ((x * 3) * scale) + (1 * scale));
-                        Canvas.SetTop(rect2, ((y * 3) * scale) + (2 * scale));
-                        levelCanvas.Children.Add(rect2);
+                            break;
+                        }
+                    case 8: //Player
+                        {
+                            System.Windows.Shapes.Rectangle rect;
+                            rect = new System.Windows.Shapes.Rectangle();
+                            rect.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 128, (byte)timerSlider.Value));//Orange
+                            rect.Width = 3 * scale;
+                            rect.Height = 3 * scale;
+                            Canvas.SetLeft(rect, (x * 3) * scale);
+                            Canvas.SetTop(rect, (y * 3) * scale);
+                            levelCanvas.Children.Add(rect);
 
-                        break;
-                    }
-                case 11: //Directional Left
-                    {
-                        System.Windows.Shapes.Rectangle rect;
-                        rect = new System.Windows.Shapes.Rectangle();
-                        rect.Fill = new SolidColorBrush(Color.FromArgb(255, 0, 150, 255));//Light Blue
-                        rect.Width = 3 * scale;
-                        rect.Height = 3 * scale;
-                        Canvas.SetLeft(rect, (x * 3) * scale);
-                        Canvas.SetTop(rect, (y * 3) * scale);
-                        levelCanvas.Children.Add(rect);
+                            //Additional logic for orange shades
 
-                        //Direction Left Box
-                        System.Windows.Shapes.Rectangle rect2;
-                        rect2 = new System.Windows.Shapes.Rectangle();
-                        rect2.Fill = new SolidColorBrush(Color.FromArgb(255, 128, 150, 255));//Purple Blue
-                        rect2.Width = 1 * scale;
-                        rect2.Height = 1 * scale;
-                        Canvas.SetLeft(rect2, ((x * 3) * scale));
-                        Canvas.SetTop(rect2, ((y * 3) * scale) + (1 * scale));
-                        levelCanvas.Children.Add(rect2);
+                            break;
+                        }
+                    case 9: //Directional Up
+                        {
+                            System.Windows.Shapes.Rectangle rect;
+                            rect = new System.Windows.Shapes.Rectangle();
+                            rect.Fill = new SolidColorBrush(Color.FromArgb(255, 0, 150, 255));//Light Blue
+                            rect.Width = 3 * scale;
+                            rect.Height = 3 * scale;
+                            Canvas.SetLeft(rect, (x * 3) * scale);
+                            Canvas.SetTop(rect, (y * 3) * scale);
+                            levelCanvas.Children.Add(rect);
 
-                        break;
-                    }
-                case 12: //Directional Right
-                    {
-                        System.Windows.Shapes.Rectangle rect;
-                        rect = new System.Windows.Shapes.Rectangle();
-                        rect.Fill = new SolidColorBrush(Color.FromArgb(255, 0, 150, 255));//Light Blue
-                        rect.Width = 3 * scale;
-                        rect.Height = 3 * scale;
-                        Canvas.SetLeft(rect, (x * 3) * scale);
-                        Canvas.SetTop(rect, (y * 3) * scale);
-                        levelCanvas.Children.Add(rect);
 
-                        //Direction Right Box
-                        System.Windows.Shapes.Rectangle rect2;
-                        rect2 = new System.Windows.Shapes.Rectangle();
-                        rect2.Fill = new SolidColorBrush(Color.FromArgb(255, 128, 150, 255));//Purple Blue
-                        rect2.Width = 1 * scale;
-                        rect2.Height = 1 * scale;
-                        Canvas.SetLeft(rect2, ((x * 3) * scale) + (2 * scale));
-                        Canvas.SetTop(rect2, ((y * 3) * scale) + (1 * scale));
-                        levelCanvas.Children.Add(rect2);
+                            //Direction Up Box
+                            System.Windows.Shapes.Rectangle rect2;
+                            rect2 = new System.Windows.Shapes.Rectangle();
+                            rect2.Fill = new SolidColorBrush(Color.FromArgb(255, 128, 150, 255));//Purple Blue
+                            rect2.Width = 1 * scale;
+                            rect2.Height = 1 * scale;
+                            Canvas.SetLeft(rect2, ((x * 3) * scale) + (1 * scale));
+                            Canvas.SetTop(rect2, ((y * 3) * scale));
+                            levelCanvas.Children.Add(rect2);
 
-                        break;
-                    }
+
+                            break;
+                        }
+                    case 10: //Directional Down
+                        {
+                            System.Windows.Shapes.Rectangle rect;
+                            rect = new System.Windows.Shapes.Rectangle();
+                            rect.Fill = new SolidColorBrush(Color.FromArgb(255, 0, 150, 255));//Light Blue
+                            rect.Width = 3 * scale;
+                            rect.Height = 3 * scale;
+                            Canvas.SetLeft(rect, (x * 3) * scale);
+                            Canvas.SetTop(rect, (y * 3) * scale);
+                            levelCanvas.Children.Add(rect);
+
+                            //Direction Down Box
+                            System.Windows.Shapes.Rectangle rect2;
+                            rect2 = new System.Windows.Shapes.Rectangle();
+                            rect2.Fill = new SolidColorBrush(Color.FromArgb(255, 128, 150, 255));//Purple Blue
+                            rect2.Width = 1 * scale;
+                            rect2.Height = 1 * scale;
+                            Canvas.SetLeft(rect2, ((x * 3) * scale) + (1 * scale));
+                            Canvas.SetTop(rect2, ((y * 3) * scale) + (2 * scale));
+                            levelCanvas.Children.Add(rect2);
+
+                            break;
+                        }
+                    case 11: //Directional Left
+                        {
+                            System.Windows.Shapes.Rectangle rect;
+                            rect = new System.Windows.Shapes.Rectangle();
+                            rect.Fill = new SolidColorBrush(Color.FromArgb(255, 0, 150, 255));//Light Blue
+                            rect.Width = 3 * scale;
+                            rect.Height = 3 * scale;
+                            Canvas.SetLeft(rect, (x * 3) * scale);
+                            Canvas.SetTop(rect, (y * 3) * scale);
+                            levelCanvas.Children.Add(rect);
+
+                            //Direction Left Box
+                            System.Windows.Shapes.Rectangle rect2;
+                            rect2 = new System.Windows.Shapes.Rectangle();
+                            rect2.Fill = new SolidColorBrush(Color.FromArgb(255, 128, 150, 255));//Purple Blue
+                            rect2.Width = 1 * scale;
+                            rect2.Height = 1 * scale;
+                            Canvas.SetLeft(rect2, ((x * 3) * scale));
+                            Canvas.SetTop(rect2, ((y * 3) * scale) + (1 * scale));
+                            levelCanvas.Children.Add(rect2);
+
+                            break;
+                        }
+                    case 12: //Directional Right
+                        {
+                            System.Windows.Shapes.Rectangle rect;
+                            rect = new System.Windows.Shapes.Rectangle();
+                            rect.Fill = new SolidColorBrush(Color.FromArgb(255, 0, 150, 255));//Light Blue
+                            rect.Width = 3 * scale;
+                            rect.Height = 3 * scale;
+                            Canvas.SetLeft(rect, (x * 3) * scale);
+                            Canvas.SetTop(rect, (y * 3) * scale);
+                            levelCanvas.Children.Add(rect);
+
+                            //Direction Right Box
+                            System.Windows.Shapes.Rectangle rect2;
+                            rect2 = new System.Windows.Shapes.Rectangle();
+                            rect2.Fill = new SolidColorBrush(Color.FromArgb(255, 128, 150, 255));//Purple Blue
+                            rect2.Width = 1 * scale;
+                            rect2.Height = 1 * scale;
+                            Canvas.SetLeft(rect2, ((x * 3) * scale) + (2 * scale));
+                            Canvas.SetTop(rect2, ((y * 3) * scale) + (1 * scale));
+                            levelCanvas.Children.Add(rect2);
+
+                            break;
+                        }
+                }
             }
         }
 
-        //Places selected level piece onto level
+        //Starts drawing pieces to canvas on click
         private void levelCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            mouseDrawTimer.Start();
+        }
+
+        //Places selected level piece onto level where mouse is
+        private void mouseDownTimer_Tick(object sender, System.EventArgs e)
+        {
+
             Point p = Mouse.GetPosition(levelCanvas);
             int x = (int)p.X;
             int y = (int)p.Y;
@@ -745,6 +763,13 @@ namespace PakPakEd
         private void timerValueLabel_Loaded(object sender, RoutedEventArgs e)
         {
             timerSlider.Value = 45;
+        }
+
+        //Lets Mouse Down Draw Event know to stop.
+        private void Window_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            mouseDrawTimer.Stop();
+          
         }
     }
 }
