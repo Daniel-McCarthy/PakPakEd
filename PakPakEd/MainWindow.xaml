@@ -29,11 +29,15 @@
         <Button x:Name="Down_Arrow" Content="↓" HorizontalAlignment="Left" Margin="410,305,0,0" VerticalAlignment="Top" Width="28" Height="28" Click="Down_Arrow_Click"/>
         <Button x:Name="Left_Arrow" Content="←" HorizontalAlignment="Left" Margin="377,272,0,0" VerticalAlignment="Top" Width="28" Height="28" Click="Left_Arrow_Click"/>
         <Button x:Name="Right_Arrow" Content="→" HorizontalAlignment="Left" Margin="443,272,0,0" VerticalAlignment="Top" Width="28" Height="28" Click="Right_Arrow_Click"/>
-        <GroupBox Header="Placement Selection" HorizontalAlignment="Left" Height="40" Margin="10,348,0,0" VerticalAlignment="Top" Width="336"/>
-        <Label x:Name="selectionLabel" Content="Enemy" HorizontalAlignment="Left" Margin="21,359,0,0" VerticalAlignment="Top" Width="288"/>
+        <GroupBox Header="Placement Selection" HorizontalAlignment="Left" Height="40" Margin="10,348,0,0" VerticalAlignment="Top" Width="158"/>
+        <Label x:Name="selectionLabel" Content="Enemy" HorizontalAlignment="Left" Margin="21,359,0,0" VerticalAlignment="Top" Width="147"/>
         <Button x:Name="openButton" Content="Open" HorizontalAlignment="Left" Margin="358,359,0,0" VerticalAlignment="Top" Width="65" Height="29" Click="openButton_Click"/>
         <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" Height="28" Margin="428,360,0,0" VerticalAlignment="Top" Width="61" RenderTransformOrigin="0.176,-1.16" Click="saveButton_Click"/>
         <Viewbox HorizontalAlignment="Left" Height="100" Margin="487,198,0,0" VerticalAlignment="Top" Width="100"/>
+        <Slider x:Name="timerSlider" HorizontalAlignment="Left" Margin="173,370,0,0" VerticalAlignment="Top" Width="173" Maximum="255" ValueChanged="Slider_ValueChanged" SmallChange="1"/>
+        <Label Content="Level Timer:" HorizontalAlignment="Left" Margin="167,346,0,0" VerticalAlignment="Top" Width="79"/>
+        <Label x:Name="timerValueLabel" Content="45" HorizontalAlignment="Left" Margin="241,347,0,0" VerticalAlignment="Top" Width="55" Loaded="timerValueLabel_Loaded"/>
+        <Label Content="seconds" HorizontalAlignment="Left" Margin="274,346,0,0" VerticalAlignment="Top" Width="55"/>
 
     </Grid>
 </Window>

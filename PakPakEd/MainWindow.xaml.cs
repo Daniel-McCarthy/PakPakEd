@@ -209,7 +209,7 @@ namespace PakPakEd
                     {
                         System.Windows.Shapes.Rectangle rect;
                         rect = new System.Windows.Shapes.Rectangle();
-                        rect.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 128, 45));//Orange
+                        rect.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 128, (byte)timerSlider.Value));//Orange
                         rect.Width = 3 * scale;
                         rect.Height = 3 * scale;
                         Canvas.SetLeft(rect, (x * 3) * scale);
@@ -598,10 +598,6 @@ namespace PakPakEd
                     System.Drawing.Color path = System.Drawing.Color.FromArgb(0, 0, 0);
                     System.Drawing.Color enemy = System.Drawing.Color.FromArgb(255, 0, 0);
                     System.Drawing.Color player = System.Drawing.Color.FromArgb(255, 128, 45);
-                    System.Drawing.Color playerVariation1 = System.Drawing.Color.FromArgb(255, 128, 0);
-                    System.Drawing.Color playerVariation2 = System.Drawing.Color.FromArgb(255, 128, 25);
-                    System.Drawing.Color playerVariation3 = System.Drawing.Color.FromArgb(255, 128, 60);
-                    System.Drawing.Color playerVariation4 = System.Drawing.Color.FromArgb(255, 128, 75);
                     System.Drawing.Color directionalPad = System.Drawing.Color.FromArgb(0, 150, 255);
                     System.Drawing.Color collectible = System.Drawing.Color.FromArgb(0, 255, 0);
 
@@ -671,10 +667,14 @@ namespace PakPakEd
 
                             }
 
-                            if (Equals(currentPixel, player) || Equals(currentPixel, playerVariation1) || Equals(currentPixel, playerVariation2) || Equals(currentPixel, playerVariation3) || Equals(currentPixel, playerVariation4))
+                            //Player spawner
+                            if (currentPixel.R == 255 && currentPixel.G == 128)
                             {
                                 editLevelPiece((byte)(currentPixelXPos / 3), (byte)(currentPixelYPos / 3), 8);
                                 drawPieceToCanvas((byte)(currentPixelXPos / 3), (byte)(currentPixelYPos / 3), 8);
+
+                                //Set the slider to the player color loaded in
+                                timerSlider.Value = currentPixel.B;
                             }
 
                             if (Equals(currentPixel, directionalPad))
@@ -707,6 +707,8 @@ namespace PakPakEd
                             }
 
                         }
+                        
+
                     }
                     else
                     {
@@ -721,9 +723,28 @@ namespace PakPakEd
             }
         }
 
-        private void levelCanvas_MouseDown(object sender, MouseButtonEventArgs e)
+        //Sets label to show timer slider value on change
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            timerValueLabel.Content = ((byte)e.NewValue).ToString();
 
+            //Redraw player spawn points
+            for (int i = 0; i < levelPieces.Length; i++)
+            {
+                if(levelPieces[i] == 8)
+                {
+                    int xPos = i % 28;
+                    int yPos = i / 28;
+
+                    drawPieceToCanvas((byte)(xPos), (byte)(yPos), 8);
+                }
+            }
+        }
+
+        //Upon loading the label: Set slider value to 45. (Setting the value to 45 by default causes the on-change function to call while label is null.)
+        private void timerValueLabel_Loaded(object sender, RoutedEventArgs e)
+        {
+            timerSlider.Value = 45;
         }
     }
 }
