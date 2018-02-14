@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PakPakEd"
         mc:Ignorable="d"
         Title="MainWindow" Height="436.365" Width="518.159" ResizeMode="NoResize" Icon="Icon.png" MouseUp="Window_MouseUp">
-    <Grid Margin="0,0,-75,-67">
+    <Grid Margin="0,0,-6,0">
         <GroupBox Header="Node Direction" HorizontalAlignment="Left" Height="128" Margin="358,216,0,0" VerticalAlignment="Top" Width="131"/>
 
         <GroupBox Header="Node Selection" HorizontalAlignment="Left" Height="216" Margin="358,0,0,0" VerticalAlignment="Top" Width="131"/>
@@ -33,7 +33,6 @@
         <Label x:Name="selectionLabel" Content="Enemy" HorizontalAlignment="Left" Margin="21,359,0,0" VerticalAlignment="Top" Width="147"/>
         <Button x:Name="openButton" Content="Open" HorizontalAlignment="Left" Margin="358,359,0,0" VerticalAlignment="Top" Width="65" Height="29" Click="openButton_Click"/>
         <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" Height="28" Margin="428,360,0,0" VerticalAlignment="Top" Width="61" RenderTransformOrigin="0.176,-1.16" Click="saveButton_Click"/>
-        <Viewbox HorizontalAlignment="Left" Height="100" Margin="487,198,0,0" VerticalAlignment="Top" Width="100"/>
         <Slider x:Name="timerSlider" HorizontalAlignment="Left" Margin="173,370,0,0" VerticalAlignment="Top" Width="173" Maximum="255" ValueChanged="Slider_ValueChanged" SmallChange="1"/>
         <Label Content="Level Timer:" HorizontalAlignment="Left" Margin="167,346,0,0" VerticalAlignment="Top" Width="79"/>
         <Label x:Name="timerValueLabel" Content="45" HorizontalAlignment="Left" Margin="241,347,0,0" VerticalAlignment="Top" Width="55" Loaded="timerValueLabel_Loaded"/>
