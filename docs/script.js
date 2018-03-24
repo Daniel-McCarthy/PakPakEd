@@ -1,12 +1,26 @@
+//The editor canvas is scaled up for the user to easily see their level. This scale value will
+//be important for several operations, including scaling the image down to 84x84 for the final level
 var scale = 4;
+
+//These variables select the block to be placed upon clicking on the canvas
 var objectTypeSelection = 3;
 var directionSelection = 2;
 
-var width = 28; //Level is 84 pixels, a block is 3 pixels. This is 84/3
-var levelPieces = Array(width*width).fill(0); //84x84 level size, this is one element per block
+//Level is 84 pixels, a block is 3 pixels. This is 84/3
+var width = 28;
 
-var timerValue = 45;
+//84x84 level size, this is one element per block
+var levelPieces = Array(width*width).fill(0);
 
+//This timer is the number of seconds the level will last for. To save this information into
+//the level, it is set into the blue value of the player block RGB color. This limits the
+//possible values to between 0-255.
+var timerValue = 45; 
+
+
+/*
+	Fill the canvas with the blue Wall block color
+*/
 function fillCanvas()
 {
 	var canvas = document.getElementById("editorCanvas");
@@ -17,18 +31,27 @@ function fillCanvas()
 
 }
 
+/*
+	Sets the current block type for drawing level pieces to the canvas
+*/
 function setObjectType(typeID)
 {
 	objectTypeSelection = typeID;
 	updateSelectionDisplay();
 }
 
+/*
+	Sets the current block direction for directional level pieces
+*/
 function setDirectionSelection(directionID)
 {
 	directionSelection = directionID;
 	updateSelectionDisplay();
 }
 
+/*
+	Sets level timer, adjusts player setting to accommodate for new timer
+*/
 function updateTimerValue(newValue)
 {
 	//Set new timer value
@@ -53,6 +76,9 @@ function updateTimerValue(newValue)
 	drawFinalImage();
 }
 
+/*
+	Draws current block selection to area of canvas user is clicking
+*/
 function drawBlock(event)
 {
 	var canvas = document.getElementById("editorCanvas");
@@ -117,6 +143,9 @@ function drawBlock(event)
 
 }
 
+/*
+	Updates the level pieces array so that the level can be read back
+*/
 function editLevelPiece(x, y, newPieceID)
 {
 	if(x < 28 && y < 28 && newPieceID <= 12)
@@ -126,6 +155,9 @@ function editLevelPiece(x, y, newPieceID)
 	}
 }
 
+/*
+	Draws the scaled down image to the final image canvas for the user to save/view
+*/
 function drawFinalImage()
 {
 	var editorCanvas = document.getElementById("editorCanvas");
@@ -136,6 +168,9 @@ function drawFinalImage()
 		0, 0, Math.floor(editorCanvas.width/scale), Math.floor(editorCanvas.height/scale));
 }
 
+/*
+	Draws a block to coordinates from a piece ID
+*/
 function drawPieceToCanvas(x, y, newPieceID)
 {
 	if(x < 28 && y < 28)
@@ -266,6 +301,9 @@ function drawPieceToCanvas(x, y, newPieceID)
 	}
 }
 
+/*
+	Updates the block selection display label with current block type and direction selected
+*/
 function updateSelectionDisplay()
 {
 	var display = "";
