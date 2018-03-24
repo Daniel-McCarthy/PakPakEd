@@ -7,24 +7,24 @@
 		<title>
 			PakPak-Ed
 		</title>
+		
+		<link rel="stylesheet" type="text/css" href="index.css">
 	</head>
 	
 	 
 
 
-	<body style= "background-color: #C0C0CF;" onload="fillCanvas()">
+	<body onload="fillCanvas()">
 
 
-		<div 	id = "editorDiv" style="text-align: center; margin: 0 auto; width:500px;
-			height:400px; background-color: #C0C0DF; border-radius: 25px;border: 3px solid white;">
+		<div 	id = "editorDiv">
 
-			<canvas 	id="editorCanvas" width="336" height="336" style= "position:relative; top: 35px;" onclick="drawBlock(event)"></canvas>
+			<canvas 	id="editorCanvas" width="336" height="336" onclick="drawBlock(event)"></canvas>
 			
-			<label id="blockInfoLabel" style="display: block;position:relative; top: 35px;">Enemy</label>
+			<label id="blockInfoLabel">Enemy</label>
 		</div>
 		
-		<div style="text-align: center; margin: 0 auto; width:200px;
-			height:160px; background-color: #C0C0DF; border-radius: 15px;border: 3px solid white;">
+		<div id="controlsDiv">
 			
 			<label id="timerLabel">Timer Length: 45 Seconds</label>
 			
@@ -34,16 +34,16 @@
 		
 
 			<label style=" position: relative;left: 30px;">Directional Select: </label>
-			<input type="button" value="↑" id="startSortsButton"  onclick="setDirectionSelection(0)" style=" position: relative;left: -40px;top: 33px;display: inline-block;"/>
-			<input type="button" value="←" id="startSortsButton" onclick="setDirectionSelection(3)" style=" position: relative;left: -110px;top: 56px;display: inline-block;"/>
-			<input type="button" value="·" id="startSortsButton" onclick="setDirectionSelection(2)" style=" position: relative;left: 38px;top: 33px;display: inline-block;"/>
-			<input type="button" value="→" id="startSortsButton" onclick="setDirectionSelection(4)" style=" position: relative;left: 38px;top: 33px;display: inline-block;"/>
-			<input type="button" value="↓" id="startSortsButton" onclick="setDirectionSelection(1)" style=" position: relative;left: -32px;top: 56px;display: inline-block;"/>
+			
+			<input type="button" value="↑" onclick="setDirectionSelection(0)" id="upArrowButton"/>
+			<input type="button" value="←" onclick="setDirectionSelection(3)" id="leftArrowButton"/>
+			<input type="button" value="·" onclick="setDirectionSelection(2)" id="noDirectionButton"/>
+			<input type="button" value="→" onclick="setDirectionSelection(4)" id="rightArrowButton"/>
+			<input type="button" value="↓" onclick="setDirectionSelection(1)" id="downArrowButton"/>
 
 		</div>
 		
-		<div style="text-align: center; margin: 0 auto; width:300px;
-			height:180px; background-color: #C0C0DF; border-radius: 25px;border: 3px solid white;">
+		<div id="blockSelectDiv">
 			
 			<label>Block Select: </label>
 			<br>
@@ -51,9 +51,7 @@
 				<div>
 					<label>Enemy: </label>
 					<br>
-					<div style = "background-color:red; width: 20px; height: 20px;display: inline-block;">
-					
-					</div>
+					<div id="redBox"></div>
 				</div>
 			</button>
 			
@@ -63,9 +61,7 @@
 				<div>
 					<label>Path: </label>
 					<br>
-					<div style = "background-color:black; width: 20px; height: 20px;display: inline-block;padding: 0 0 0 0;">
-					
-					</div>
+					<div id="blackBox"></div>
 				</div>
 			</button>
 			
@@ -75,7 +71,7 @@
 				<div>
 					<label>Wall: </label>
 					<br>
-					<div style = "background-color:blue; width: 20px; height: 20px;display: inline-block;">
+					<div id="blueBox">
 					</div>
 				</div>
 			</button>
@@ -86,9 +82,7 @@
 				<div>
 					<label>Directional Pad: </label>
 					<br>
-					<div style = "background-color:rgb(0,150,255); width: 20px; height: 20px;display: inline-block;">
-					
-					</div>
+					<div id="lightBlueBox"></div>
 				</div>
 			</button>
 			
@@ -98,9 +92,7 @@
 				<div>
 					<label>Player: </label>
 					<br>
-					<div style = "background-color:orange; width: 20px; height: 20px;display: inline-block;">
-					
-					</div>
+					<div id="orangeBox"></div>
 				</div>
 			</button>
 		
@@ -110,15 +102,13 @@
 				<div>
 					<label style = "display: inline-block;">Collectible: </label>
 					<br>
-					<div style = "background-color:lightgreen; width: 20px; height: 20px;display: inline-block;">
-					
-					</div>
+					<div id="greenBox"></div>
 				</div>
 			</button>
 		<div>
 		
 		<div 	id = "finalImageDiv">
-			<canvas 	id="finalImageCanvas" width="84" height="84" style= "position:relative; top: 35px;"></canvas>
+			<canvas 	id="finalImageCanvas" width="84" height="84"></canvas>
 
 		</div>
 		
