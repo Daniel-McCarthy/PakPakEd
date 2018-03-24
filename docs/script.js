@@ -20,13 +20,13 @@ function fillCanvas()
 function setObjectType(typeID)
 {
 	objectTypeSelection = typeID;
-	//updateSelectionDisplay();
+	updateSelectionDisplay();
 }
 
 function setDirectionSelection(directionID)
 {
 	directionSelection = directionID;
-	//updateSelectionDisplay();
+	updateSelectionDisplay();
 }
 
 function updateTimerValue(newValue)
@@ -252,4 +252,83 @@ function drawPieceToCanvas(x, y, newPieceID)
 	}
 }
 
-//Todo: implement update display label
+function updateSelectionDisplay()
+{
+	var display = "";
+
+	switch (objectTypeSelection)
+	{
+
+		case 0:
+			{
+				display += "Wall";
+				break;
+			}
+		case 1:
+			{
+				display += "Path";
+				break;
+			}
+		case 2:
+			{
+				display += "Collectible";
+				break;
+			}
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+		case 7:
+			{
+				display += "Enemy";
+				break;
+			}
+		case 8:
+			{
+				display += "Player";
+				break;
+			}
+		case 9:
+		case 10:
+		case 11:
+		case 12:
+			{
+				display += "Directional Pad";
+				break;
+			}
+	}
+
+	if ((objectTypeSelection >= 3 && objectTypeSelection < 8) || objectTypeSelection >= 9)
+	{
+		switch (directionSelection)
+		{
+			case 0:
+				{
+					display += ", Up";
+					break;
+				}
+			case 1:
+				{
+					display += ", Down";
+					break;
+				}
+			case 3:
+				{
+					display += ", Left";
+					break;
+				}
+			case 4:
+				{
+					display += ", Right";
+					break;
+				}
+		}
+	}
+	
+	if (objectTypeSelection == 9 && directionSelection == 2) //If directional pad selected with no direction then display as up
+	{
+		display += ", Up";
+	}
+
+	document.getElementById("blockInfoLabel").innerHTML = display;
+}
