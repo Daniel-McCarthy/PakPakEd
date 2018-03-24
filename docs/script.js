@@ -48,6 +48,9 @@ function updateTimerValue(newValue)
 			drawPieceToCanvas(xPos, yPos, 8);
 		}
 	}
+	
+	//Redraw Final Image
+	drawFinalImage();
 }
 
 function drawBlock(event)
@@ -110,6 +113,7 @@ function drawBlock(event)
 
             drawPieceToCanvas(levelPieceXPos, levelPieceYPos, levelPiece);
 			editLevelPiece(levelPieceXPos, levelPieceYPos, levelPiece);
+			drawFinalImage();
 
 }
 
