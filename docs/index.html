@@ -25,88 +25,90 @@
 			<label id="blockInfoLabel">Enemy</label>
 		</div>
 		
-		<div id="controlsDiv">
+		<div id="controlsWrapperDiv">
+			<div id="controlsDiv">
+				
+				<label id="timerLabel">Timer Length: 45 Seconds</label>
+				
+				<div class="slidecontainer">
+					<input type="range" min="0" max="255" value="45" class="slider" id="sliderRange" onchange="updateTimerValue(this.value)">
+				</div>
 			
-			<label id="timerLabel">Timer Length: 45 Seconds</label>
-			
-			<div class="slidecontainer">
-				<input type="range" min="0" max="255" value="45" class="slider" id="sliderRange" onchange="updateTimerValue(this.value)">
+
+				<label>Directional Select: </label>
+				
+				<input type="button" value="↑" onclick="setDirectionSelection(0)" id="upArrowButton"/>
+				<input type="button" value="←" onclick="setDirectionSelection(3)" id="leftArrowButton"/>
+				<input type="button" value="·" onclick="setDirectionSelection(2)" id="noDirectionButton"/>
+				<input type="button" value="→" onclick="setDirectionSelection(4)" id="rightArrowButton"/>
+				<input type="button" value="↓" onclick="setDirectionSelection(1)" id="downArrowButton"/>
+
 			</div>
-		
-
-			<label style=" position: relative;left: 30px;">Directional Select: </label>
 			
-			<input type="button" value="↑" onclick="setDirectionSelection(0)" id="upArrowButton"/>
-			<input type="button" value="←" onclick="setDirectionSelection(3)" id="leftArrowButton"/>
-			<input type="button" value="·" onclick="setDirectionSelection(2)" id="noDirectionButton"/>
-			<input type="button" value="→" onclick="setDirectionSelection(4)" id="rightArrowButton"/>
-			<input type="button" value="↓" onclick="setDirectionSelection(1)" id="downArrowButton"/>
-
-		</div>
-		
-		<div id="blockSelectDiv">
-			
-			<label>Block Select: </label>
-			<br>
-			<button type="button" style="width:120px;" onclick="setObjectType(3)">
-				<div>
-					<label>Enemy: </label>
-					<br>
-					<div id="redBox"></div>
-				</div>
-			</button>
-			
-		
-			
-			<button type="button" style="width:120px;" onclick="setObjectType(1)">
-				<div>
-					<label>Path: </label>
-					<br>
-					<div id="blackBox"></div>
-				</div>
-			</button>
-			
-			
-			
-			<button type="button" style="width:120px;" onclick="setObjectType(0)">
-				<div>
-					<label>Wall: </label>
-					<br>
-					<div id="blueBox">
+			<div id="blockSelectDiv">
+				
+				<label>Block Select: </label>
+				<br>
+				<button type="button" style="width:120px;" onclick="setObjectType(3)">
+					<div>
+						<label>Enemy: </label>
+						<br>
+						<div id="redBox"></div>
 					</div>
-				</div>
-			</button>
+				</button>
+				
 			
+				
+				<button type="button" style="width:120px;" onclick="setObjectType(1)">
+					<div>
+						<label>Path: </label>
+						<br>
+						<div id="blackBox"></div>
+					</div>
+				</button>
+				
+				
+				
+				<button type="button" style="width:120px;" onclick="setObjectType(0)">
+					<div>
+						<label>Wall: </label>
+						<br>
+						<div id="blueBox">
+						</div>
+					</div>
+				</button>
+				
+				
+				
+				<button type="button" style="width:120px;" onclick="setObjectType(9)">
+					<div>
+						<label>Directional Pad: </label>
+						<br>
+						<div id="lightBlueBox"></div>
+					</div>
+				</button>
+				
+				
+				
+				<button type="button" style="width:120px;" onclick="setObjectType(8)">
+					<div>
+						<label>Player: </label>
+						<br>
+						<div id="orangeBox"></div>
+					</div>
+				</button>
 			
-			
-			<button type="button" style="width:120px;" onclick="setObjectType(9)">
-				<div>
-					<label>Directional Pad: </label>
-					<br>
-					<div id="lightBlueBox"></div>
-				</div>
-			</button>
-			
-			
-			
-			<button type="button" style="width:120px;" onclick="setObjectType(8)">
-				<div>
-					<label>Player: </label>
-					<br>
-					<div id="orangeBox"></div>
-				</div>
-			</button>
-		
-			
-			
-			<button type="button" style="width:120px;" onclick="setObjectType(2)">
-				<div>
-					<label style = "display: inline-block;">Collectible: </label>
-					<br>
-					<div id="greenBox"></div>
-				</div>
-			</button>
-		<div>
+				
+				
+				<button type="button" style="width:120px;" onclick="setObjectType(2)">
+					<div>
+						<label style = "display: inline-block;">Collectible: </label>
+						<br>
+						<div id="greenBox"></div>
+					</div>
+				</button>
+			</div>
+		</div>
 		
 		<div 	id = "finalImageDiv">
 			<canvas 	id="finalImageCanvas" width="84" height="84"></canvas>

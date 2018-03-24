@@ -12,6 +12,9 @@ body
 	background-color: #C0C0DF;
 	border-radius: 25px;
 	border: 3px solid white;
+	position: absolute;
+	left: 570px;
+	top: 10px;
 }
 
 #editorCanvas
@@ -26,56 +29,27 @@ body
 	position:relative;
 	top: 35px;
 }
-		
+	
+#controlsWrapperDiv
+{
+	background-color: #C0C0DF;
+	width:500px;
+	height:170px;
+	position: absolute;
+	left: 570px;
+	top: 420px;
+	border-radius: 25px;
+	border: 3px solid white;
+}
+	
 #controlsDiv
 {
 	text-align: center;
 	margin: 0 auto;
 	width:200px;
-	height:160px;
-	background-color: #C0C0DF;
-	border-radius: 15px;
-	border: 3px solid white;
-}
-
-#upArrowButton
-{
+	height:170px;
 	position: relative;
-	left: -40px;
-	top: 33px;
-	display: inline-block;
-}
-
-#leftArrowButton
-{
-	position: relative;
-	left: -110px;
-	top: 56px;
-	display: inline-block;
-}
-
-#noDirectionButton
-{
-	position: relative;
-	left: 38px;
-	top: 33px;
-	display: inline-block;
-}
-
-#rightArrowButton
-{
-	position: relative;
-	left: 38px;
-	top: 33px;
-	display: inline-block;
-}
-
-#downArrowButton
-{
-	position: relative;
-	left: -32px;
-	top: 56px;
-	display: inline-block;
+	left: -150px;
 }
 
 #blockSelectDiv
@@ -83,10 +57,55 @@ body
 	text-align: center;
 	margin: 0 auto;
 	width:300px;
-	height:180px;
-	background-color: #C0C0DF;
-	border-radius: 25px;
-	border: 3px solid white;
+	height:170px;
+	position: relative;
+	left: 106px;
+	top: -170px;
+}
+
+#upArrowButton
+{
+	position: absolute;
+	left: 90px;
+	top: 78px;
+	width: 29px;
+	display: inline-block;
+}
+
+#leftArrowButton
+{
+	position: absolute;
+	left: 62px;
+	top: 101px;
+	width: 29px;
+	display: inline-block;
+}
+
+#noDirectionButton
+{
+	position: absolute;
+	left: 90px;
+	top: 101px;
+	width: 29px;
+	display: inline-block;
+}
+
+#rightArrowButton
+{
+	position: absolute;
+	left: 118px;
+	top: 101px;
+	width: 29px;
+	display: inline-block;
+}
+
+#downArrowButton
+{
+	position: absolute;
+	left: 90px;
+	top: 124px;
+	width: 29px;
+	display: inline-block;
 }
 
 #redBox
@@ -139,6 +158,7 @@ body
 
 #finalImageDiv
 {
-	position:relative;
-	top: 35px;
+	position:absolute;
+	top: 620px;
+	left:770px;
 }
