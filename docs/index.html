@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta 	charset="utf-8"/>
+
+		<title>
+			PakPak-Ed
+		</title>
+	</head>
+	
+	 
+
+
+	<body style= "background-color: #C0C0CF;" onload="fillCanvas()">
+
+
+		<div 	id = "editorDiv" style="text-align: center; margin: 0 auto; width:500px;
+			height:430px; background-color: #C0C0DF; border-radius: 25px;border: 3px solid white;">
+
+			<canvas 	id="editorCanvas" width="336" height="336" style= "position:relative; top: 35px;" onclick="drawBlock(event)"></canvas>
+			<label id="blockInfoLabel"></label>
+		</div>
+		
+		<div style="text-align: center; margin: 0 auto; width:200px;
+			height:40px; background-color: #C0C0DF; border-radius: 15px;border: 3px solid white;">
+			
+			<label id="timerLabel">Timer Length: 45 Seconds</label>
+			
+			<div class="slidecontainer">
+				<input type="range" min="0" max="255" value="45" class="slider" id="sliderRange" onchange="updateTimerValue(this.value)">
+			</div>
+		</div>
+		
+		<div id="enemyDirectionDiv" style="text-align: center; margin: 0 auto; width:200px;
+			height:120px; background-color: #C0C0DF; border-radius: 15px;border: 3px solid white;">
+
+			<label style=" position: relative;left: 30px;">Directional Select: </label>
+			<input type="button" value="↑" id="startSortsButton"  onclick="setDirectionSelection(0)" style=" position: relative;left: -40px;top: 33px;display: inline-block;"/>
+			<input type="button" value="←" id="startSortsButton" onclick="setDirectionSelection(3)" style=" position: relative;left: -110px;top: 56px;display: inline-block;"/>
+			<input type="button" value="·" id="startSortsButton" onclick="setDirectionSelection(2)" style=" position: relative;left: 38px;top: 33px;display: inline-block;"/>
+			<input type="button" value="→" id="startSortsButton" onclick="setDirectionSelection(4)" style=" position: relative;left: 38px;top: 33px;display: inline-block;"/>
+			<input type="button" value="↓" id="startSortsButton" onclick="setDirectionSelection(1)" style=" position: relative;left: -32px;top: 56px;display: inline-block;"/>
+
+		</div>
+		
+		<div style="text-align: center; margin: 0 auto; width:300px;
+			height:180px; background-color: #C0C0DF; border-radius: 25px;border: 3px solid white;">
+			
+			<label>Block Select: </label>
+			<br>
+			<button type="button" style="width:120px;" onclick="setObjectType(3)">
+				<div>
+					<label>Enemy: </label>
+					<br>
+					<div style = "background-color:red; width: 20px; height: 20px;display: inline-block;">
+					
+					</div>
+				</div>
+			</button>
+			
+		
+			
+			<button type="button" style="width:120px;" onclick="setObjectType(1)">
+				<div>
+					<label>Path: </label>
+					<br>
+					<div style = "background-color:black; width: 20px; height: 20px;display: inline-block;padding: 0 0 0 0;">
+					
+					</div>
+				</div>
+			</button>
+			
+			
+			
+			<button type="button" style="width:120px;" onclick="setObjectType(0)">
+				<div>
+					<label>Wall: </label>
+					<br>
+					<div style = "background-color:blue; width: 20px; height: 20px;display: inline-block;">
+					</div>
+				</div>
+			</button>
+			
+			
+			
+			<button type="button" style="width:120px;" onclick="setObjectType(9)">
+				<div>
+					<label>Directional Pad: </label>
+					<br>
+					<div style = "background-color:rgb(0,150,255); width: 20px; height: 20px;display: inline-block;">
+					
+					</div>
+				</div>
+			</button>
+			
+			
+			
+			<button type="button" style="width:120px;" onclick="setObjectType(8)">
+				<div>
+					<label>Player: </label>
+					<br>
+					<div style = "background-color:orange; width: 20px; height: 20px;display: inline-block;">
+					
+					</div>
+				</div>
+			</button>
+		
+			
+			
+			<button type="button" style="width:120px;" onclick="setObjectType(2)">
+				<div>
+					<label style = "display: inline-block;">Collectible: </label>
+					<br>
+					<div style = "background-color:lightgreen; width: 20px; height: 20px;display: inline-block;">
+					
+					</div>
+				</div>
+			</button>
+		<div>
+		
+
+		<!--
+		<div 	id = "debuggerDiv" style="position:relative; top: 20px; text-align: center; margin: 0 auto; width:850px;
+			height:580px; background-color: #FF90AD; border-radius: 25px;border: 3px solid white; display: none;">
+
+
+			<textarea 	cols= "26" rows= "25" id = "dataDisplayTextBox" style="position:relative; top: 40px;"></textarea>
+			<textarea 	cols= "68" rows= "25" id = "debuggerTextBox" style="position:relative; top: 40px;"></textarea><br>
+			<textarea 	cols= "26" rows= "5" id = "keyDisplayTextBox" style="position:relative; top: 40px; right: 285px;"></textarea><br>
+			<input 		type="button" value="Pause" id="pauseButton" onclick="pauseUnpause()" style="position:relative; top: 40px;" />
+			<input 		type="button" value="Step" id="stepButton" onclick="stepOnce()" style="position:relative; top: 40px;" />
+			<label		style="position:relative; top: 40px; font-size: 10px; color: white">Loop Delay: </label>
+			<input 		type="number" min="0" max="2000" value = "4" style="position:relative; top: 40px; width: 60px;" oninput="setGameSpeed(this.value)" /><br>
+		</div>
+
+		<div id = "debuggerButtonDiv" style="position:relative; top: 15px; text-align: center; margin: 0 auto; width:100px; height:40px;">
+
+			<input 		type="button" value="Debugger" id="hideDebuggerButton" onclick="hideShowDebugger()" style="position:relative; top: 10px;" />
+		</div>-->
+
+		<div 	id = "finalImageDiv">
+
+			<canvas 	id="finalImageCanvas" width="84" height="84" style= "position:relative; top: 35px;"></canvas>
+
+		</div>
+		
+		<script type = "text/javascript" src = "script.js"></script>
+
+	</body>
+
+
+</html>
