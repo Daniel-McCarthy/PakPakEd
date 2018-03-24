@@ -16,7 +16,7 @@
 
 
 		<div 	id = "editorDiv" style="text-align: center; margin: 0 auto; width:500px;
-			height:430px; background-color: #C0C0DF; border-radius: 25px;border: 3px solid white;">
+			height:400px; background-color: #C0C0DF; border-radius: 25px;border: 3px solid white;">
 
 			<canvas 	id="editorCanvas" width="336" height="336" style= "position:relative; top: 35px;" onclick="drawBlock(event)"></canvas>
 			
@@ -24,17 +24,14 @@
 		</div>
 		
 		<div style="text-align: center; margin: 0 auto; width:200px;
-			height:40px; background-color: #C0C0DF; border-radius: 15px;border: 3px solid white;">
+			height:160px; background-color: #C0C0DF; border-radius: 15px;border: 3px solid white;">
 			
 			<label id="timerLabel">Timer Length: 45 Seconds</label>
 			
 			<div class="slidecontainer">
 				<input type="range" min="0" max="255" value="45" class="slider" id="sliderRange" onchange="updateTimerValue(this.value)">
 			</div>
-		</div>
 		
-		<div id="enemyDirectionDiv" style="text-align: center; margin: 0 auto; width:200px;
-			height:120px; background-color: #C0C0DF; border-radius: 15px;border: 3px solid white;">
 
 			<label style=" position: relative;left: 30px;">Directional Select: </label>
 			<input type="button" value="↑" id="startSortsButton"  onclick="setDirectionSelection(0)" style=" position: relative;left: -40px;top: 33px;display: inline-block;"/>
