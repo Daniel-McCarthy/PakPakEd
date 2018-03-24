@@ -122,6 +122,16 @@ function editLevelPiece(x, y, newPieceID)
 	}
 }
 
+function drawFinalImage()
+{
+	var editorCanvas = document.getElementById("editorCanvas");
+	var editorCanvasContext = editorCanvas.getContext("2d");
+	var finalImageCanvasContext = document.getElementById("finalImageCanvas").getContext("2d");
+	
+	finalImageCanvasContext.drawImage(editorCanvas, 0,0, editorCanvas.width, editorCanvas.height,
+		0, 0, Math.floor(editorCanvas.width/scale), Math.floor(editorCanvas.height/scale));
+}
+
 function drawPieceToCanvas(x, y, newPieceID)
 {
 	if(x < 28 && y < 28)
