@@ -197,7 +197,7 @@ function drawPieceToCanvas(x, y, newPieceID)
 			}
 			case 2: //Collectible
 			{
-				context.fillStyle = "lightgreen";
+				context.fillStyle = "rgb(0,255,0)";
 				context.fillRect((x * 3) * scale, (y*3) * scale, 3 * scale, 3 * scale);
 				break;
 			}
